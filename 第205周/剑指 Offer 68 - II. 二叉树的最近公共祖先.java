@@ -8,25 +8,17 @@
  * }
  */
 class Solution {
-    TreeNode node;
-    TreeNode pre;
-    public TreeNode convertBiNode(TreeNode root) {
-        inOrder(root);
-        return node;
-    }
-
-    private void inOrder(TreeNode root){
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root==null)
-            return;
-        inOrder(root.left);
-        if(node==null){
-            node=root;
-        }
-        if(pre!=null){
-            pre.right=root;
-            root.left=null;
-        }
-        pre=root;
-        inOrder(root.right);
+            return null;
+        if(root.val==p.val||root.val==q.val)
+            return root;
+        TreeNode left=lowestCommonAncestor(root.left,p,q);
+        TreeNode right=lowestCommonAncestor(root.right,p,q);
+        if(left==null&&right==null)
+            return null;
+        else if(left==null||right==null)
+            return left==null?right:left;
+        return root;
     }
 }
